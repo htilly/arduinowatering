@@ -21,7 +21,7 @@ int valveOutputPin = 8;
   How often to check the plant needs watering
   and to send readings to the server
 */
-unsigned long pollMillis = 6000; // 1 min
+unsigned long pollMillis = 900000; // 15 min
 
 
 /*

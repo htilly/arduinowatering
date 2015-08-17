@@ -14,8 +14,10 @@ Libraries in both original Arduino and WiFi has been modified in order to get th
 
 You will need to modify the next 3 lines to match you WiFi network and you ThingSpeak account.
 NOTE - For EPS8266 to work you NEED to modify SoftwareSerial.h.
+
 Make sure it is: #define _SS_MAX_RX_BUFF 256 // RX buffer size
 For OSX, this is the file:
+
 /Applications/Arduino.app/Contents/Java/hardware/arduino/avr/libraries/SoftwareSerial/SoftwareSerial.h	
 
 

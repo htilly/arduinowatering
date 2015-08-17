@@ -1,0 +1,17 @@
+Wireless	KEYWORD1
+disconnectAP	KEYWORD2
+createAP	KEYWORD2
+connectToServer	KEYWORD2
+disconnectFromServer	KEYWORD2
+sendDataToServer	KEYWORD2
+sendDataToClient	KEYWORD2
+getIP	KEYWORD2
+startServer	KEYWORD2
+softReset	KEYWORD2
+stopServer	KEYWORD2
+getStatus	KEYWORD2
+hardReset	KEYWORD2
+enable	KEYWORD2
+disable	KEYWORD2
+readChar	KEYWORD2
+available	KEYWORD2

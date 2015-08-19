@@ -1,12 +1,21 @@
 # arduinowatering
 
-Simple solution for watering my plants....
+Solution for watering plants with Arduino....
+Started out as a simple project but has become more complex over time =)
+
+There are quite some trix to get the ESP8266-01 working correctly. I won´t cover this in details here.
+Howerver, the files included in this project assume that the ESP8266 is communication at 9600 baud.
+
 
 The following HW is beeing used:
 
 -	Arduino Uno
+-	WiFi module, ESP8266-01. http://www.miniinthebox.com/sv/esp8266-serie-wifi-tradlosa-modulen-wifi-tradlos-modul_p3247309.html
+	- LD1117V33, http://eu.mouser.com/ProductDetail/STMicroelectronics/LD1117V33/?qs=sGAEpiMZZMsGz1a6aV8DcCz10aAT%252bcfyfixmM%2fM6hTA%3d
 -	Moisture Sensor, http://www.miniinthebox.com/sv/fuktighetssensor-ground-luftfuktighet-sensor-module_p903362.html
 -	Magnetic Valve, https://www.sparkfun.com/products/10456
+-	Relay, http://www.dx.com/p/arduino-compatible-4-channel-relay-shield-module-144762#.VdGtdbT6Q1E
+-	Temperature / Humidity Sensor, http://www.miniinthebox.com/temperature-humidity-sensor-dht11-module-for-arduino-deep-blue-works-with-official-arduino-board_p1141519.html
 
 NOTE:
 
@@ -23,9 +32,13 @@ For OSX, this is the file:
 
 Problem right now:
 Moisture Sensor get broken within a week. Problem is that it´s constantly getting 5V causing corrosion.
-To solve the problem I will power the sensor thru a relay.
+To solve the problem I will power the sensor only when needed thru a relay.
 
 
 TODO:
--	Power Moisture Sensor thru relay
--	Pull setting from external source
+-	Power Moisture Sensor thru relay.
+-	Pull setting from external source.
+
+
+More informarion and original libraries for ESP8266-01, see:
+http://www.zeptobit.com/8266wing/

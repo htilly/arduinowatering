@@ -1,18 +1,19 @@
 #include <SPI.h>
 #include <SimpleTimer.h>
 #include <dht.h>
-#define dht_apin A0
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 #include "Wireless.h"
 
 dht DHT;
+#define dht_apin A0
 
 //You will need to modify the next 3 lines to match you WiFi network and you ThingSpeak account.
 // NOTE - For EPS8266 to work you NEED to modify SoftwareSerial.h.
 // Make sure it is: #define _SS_MAX_RX_BUFF 256 // RX buffer size
 // For OSX, this is the file:
 // /Applications/Arduino.app/Contents/Java/hardware/arduino/avr/libraries/SoftwareSerial/SoftwareSerial.h
+
 
 const String APSSID = ""; //The name of the AP/SSID you connect to
 const String wpaKey = ""; //The WPA key of your AP
@@ -28,17 +29,18 @@ Wireless wifi(6,7); //Set up the WiFi library. Parameters: RX pin, TX pin, Enabl
   Pin configuration
 */
 
-//Funduino: Soil Moisture Sensor Ground Humidity Sensor Module
-// http://www.miniinthebox.com/soil-moisture-sensor-ground-humidity-sensor-module_p903362.html
 
-// int moistureInputPin = 0;
+//Soil Moisture Sensor
 int moistureInputPin = A0;
-int Temp = A1;
+
+//Temp & Humidity
+int dhtInputPin = A1;
 
 //Water valve
-// https://www.sparkfun.com/products/10456
 int valveOutputPin = 9;
 
+//Power to moisture sensor via relay (save the equipment from corrosion)
+int moistureOutputPin = 10;
 
 
 /*
@@ -56,7 +58,7 @@ Calebrating..
 Finally - set it to 650
 */
 
-int waterAtMoisture = 400;
+int waterAtMoisture = 620;
 
 /*
   When the soil gets dry enough to warrant a watering,
@@ -72,6 +74,7 @@ SimpleTimer timer;
 
 void setup() {
   pinMode(valveOutputPin, OUTPUT);
+  pinMode(moistureOutputPin, OUTPUT);
 
 
 
@@ -95,8 +98,7 @@ void setup() {
 
 void loop() {
 
-  // DHT.read11(dht_apin);
-  DHT.read11(Temp);
+  DHT.read11(dhtInputPin);
   timer.run();
 
 }
@@ -112,7 +114,7 @@ void poll() {
   Serial.print(DHT.humidity);
   Serial.print("%  ");
   Serial.print("temperature = ");
-  Serial.print(DHT.temperature);
+  Serial.print(   .temperature);
   Serial.println("C  ");
   Serial.println();
   Serial.println();
@@ -139,7 +141,7 @@ void poll() {
 
   //Send data to server
   String request = "";
-  request = request + "GET /update?key=" + ThingSpeakKey + "&field1=" + DHT.humidity + "&field2=" + DHT.temperature + "&field3=" + moisture + "&field4=" + watered + "\r\n";
+  request = request + "GET /update?key=" + ThingSpeakKey + "&field1=" + DHT.humidity + "&field2=" + DHT.temperature + "&field3=" + moisture + "&field4=" + watered + "&field5=" + waterAtMoisture + "&field6=" + waterForMillis +"\r\n";
 
   Serial.println("Connecting to server.");
   wifi.connectToServer("184.106.153.149", 80); //Connects to the Thingspeak server on port 80.
@@ -167,7 +169,16 @@ int getSoilMoisture() {
 
 
   //Take a reading
+
+  Serial.println();
+  Serial.println ("Reading moisture... ");
+  Serial.println();
+  digitalWrite(moistureOutputPin, HIGH);
+  delay(500);
   int reading = analogRead(moistureInputPin);
+  delay(100);
+  digitalWrite(moistureOutputPin, LOW);
+
 
   return reading;
 }
